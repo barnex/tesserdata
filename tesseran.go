@@ -9,6 +9,10 @@ import(
 	"fmt"
 )
 
+var(
+	flag_res = flag.Float64("res", 10, "Time resolution in seconds")
+)
+
 func main(){
 	log.SetFlags(0)
 
@@ -23,6 +27,28 @@ func main(){
 
 	a, b, _ := scanStamps(f)
 	log.Println("you got", len(a), "frags, other player got", len(b))
+
+	time, rateA := fragRate(a, *flag_res)
+
+	for i, t := range time{
+		fmt.Println(t, rateA[i])
+	}
+}
+
+func fragRate(s []float64, res float64) (time, rate []float64){
+	tmax := s[len(s)-1]
+	imax := int(tmax / res)
+	rate = make([]float64, imax+1)
+	time = make([]float64, imax+1)
+	weight := 1/res
+	for _, t := range s{
+		i := int(t/res)
+		rate[i] += weight
+	}
+	for i := range time{
+		time[i] = float64(i)*res
+	}
+	return time, rate
 }
 
 // Reads timestamp file and return frag timestaps for you, other player and  total
@@ -53,7 +79,7 @@ func scanLine(f io.Reader) (time float64, gotfragged bool, err error){
 	if err != nil{
 		return 0, false, err
 	}
-	return t, g, err
+	return t/1000, g, err
 }
 
 // fatal if error != nil
