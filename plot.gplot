@@ -1,0 +1,60 @@
+#! /usr/bin/gnuplot
+
+set term png
+set style fill solid
+
+set xlabel "play time (s)"
+set ylabel "frag rate (Hz)"
+set xrange [0:]
+
+set title "Frag rate during game"
+set output "frag_rate_A.png"
+plot "<./tesserrate -res 30 data/*.txt" u 1:2 w boxes title "player A"
+set output
+
+
+set output "frag_rate_B.png"
+plot "<./tesserrate -res 30 data/*.txt" u 1:3 w boxes title "player B"
+set output
+
+
+set title "Distribution of time between frags"
+set ylabel "Frequency (Hz)"
+set xlabel "Time between frags (s)"
+set output "frag_hist_A.png"
+set xrange [0:60]
+plot "<./tesserhist -res 1 data/*.txt" u 1:2 w boxes title "player A"
+set output
+
+set output "frag_hist_B.png"
+set xrange [0:60]
+plot "<./tesserhist -res 1 data/*.txt" u 1:3 w boxes title "player B"
+set output
+
+set xrange [:20]
+set yrange [:100]
+set title "Fragging autocorrelation"
+set ylabel "Frag rate (Hz)"
+set xlabel "Time after some frag (s)"
+
+set output "frag_autocorr_A.png"
+plot "<./tessercorr -a=false -b=false -res .5 -len 20 data/*.txt" u 1:2 w boxes title "player A"
+set output
+
+set output "frag_autocorr_B.png"
+plot "<./tessercorr -a=true -b=true -res .5 -len 20 data/*.txt" u 1:2 w boxes title "player B"
+set output
+
+set xrange [:20]
+set yrange [:20]
+set title "Fragging cross-correlation"
+set ylabel "Frag rate (Hz)"
+set xlabel "Frags x seconds after being fragged"
+
+set output "frag_corrAB.png"
+plot "<./tessercorr -a=true -b=false -res .5 -len 20 data/*.txt" u 1:2 w boxes title "A frags B"
+set output
+
+set output "frag_corrBA.png"
+plot "<./tessercorr -a=false -b=true -res .5 -len 20 data/*.txt" u 1:2 w boxes title "B frags A"
+set output
