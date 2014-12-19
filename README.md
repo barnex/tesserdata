@@ -3,6 +3,9 @@
 Extracting statistics from a game of [tesseract](http://tesseract.gg).
 Example data below is from a game between two players suggestively labelled 'A' and 'B'.
 
+
+![fig](fig/gameplay.jpg)
+
 ## tesserstamp
 
 Records frag time stamps form tesseract stdout. Usage:
