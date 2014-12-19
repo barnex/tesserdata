@@ -1,7 +1,9 @@
-/*
-timestamper. Usage:
- 	tesseract | tesserstamp > timestamps.txt
-*/
+
+//+build ignore
+
+// Records frag time stamps form tesseract stdout. Usage:
+// 	tesseract | tesserstamp > timestamps.txt
+// Output: time stamp in ms, boolean indication if you got fragged
 package main
 
 import (
