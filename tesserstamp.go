@@ -1,4 +1,3 @@
-
 //+build ignore
 
 // Records frag time stamps form tesseract stdout. Usage:
@@ -24,9 +23,9 @@ func main() {
 		}
 		line := string(l)
 		if strings.Contains(line, "fragged") {
-			gotfragged :=  strings.Contains(line, "got")
-			stamp  := time.Since(start).Seconds()*1000
-			fmt.Println(stamp, gotfragged);
+			gotfragged := strings.Contains(line, "got")
+			stamp := time.Since(start).Seconds() * 1000
+			fmt.Println(stamp, gotfragged)
 		}
 	}
 }
