@@ -1,7 +1,7 @@
 # tesserdata
 
-Extracting statistics from a game of [tesseract](http://tesserract.gg).
-Example data below is from a game between two players suggestively labelled 'arne' and 'mathias'.
+Extracting statistics from a game of [tesseract](http://tesseract.gg).
+Example data below is from a game between two players suggestively labelled 'A' and 'B'.
 
 ## tesserstamp
 
@@ -27,11 +27,19 @@ Makes a histogram of time between successive frags. E.g., here player A most oft
 
 ## tesserlife
 
+Player's life expectancies. We were most likely to die after a few seconds. Surviving half a minute makes you a hero.
+
 ![fig](fig/lifetime_A.png)
 ![fig](fig/lifetime_B.png)
 
 ## tessercorr
+
+Fragging autocorrelation: chance to frag delta t after some frag. Shows reload/respawn delay.
+
 ![fig](fig/frag_autocorr_A.png)
 ![fig](fig/frag_autocorr_B.png)
+
+Fragging crosscorrelation: chance to frag detla t after being fragged.
+
 ![fig](fig/frag_corrAB.png)
 ![fig](fig/frag_corrBA.png)
