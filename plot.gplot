@@ -6,6 +6,7 @@ set style fill solid
 set xlabel "play time (s)"
 set ylabel "frag rate (Hz)"
 set xrange [0:]
+set yrange [:.25]
 
 set title "Frag rate during game"
 set output "frag_rate_A.png"
@@ -23,6 +24,7 @@ set ylabel "Frequency (Hz)"
 set xlabel "Time between frags (s)"
 set output "frag_hist_A.png"
 set xrange [0:60]
+set yrange [0:15]
 plot "<./tesserhist -res 1 data/*.txt" u 1:2 w boxes title "player A"
 set output
 
@@ -57,4 +59,18 @@ set output
 
 set output "frag_corrBA.png"
 plot "<./tessercorr -a=false -b=true -res .5 -len 20 data/*.txt" u 1:2 w boxes title "B frags A"
+set output
+
+set title "Life expectancy"
+set ylabel "Frequency (Hz)"
+set xlabel "Player life (s)"
+set xrange [:45]
+set yrange [:10]
+
+set output "lifetime_A.png"
+plot "<./tesserlife -playerA=true -res 1 -bins 100 data/*.txt" u 1:2 w boxes title "player A"
+set output
+
+set output "lifetime_B.png"
+plot "<./tesserlife -playerA=false -res 1 -bins 100 data/*.txt" u 1:2 w boxes title "player B"
 set output
