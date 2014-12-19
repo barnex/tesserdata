@@ -7,6 +7,8 @@ import (
 	"flag"
 	"log"
 	"os"
+
+	. "."
 )
 
 var (
@@ -22,16 +24,16 @@ func main() {
 	}
 
 	f, errOpen := os.Open(flag.Arg(0))
-	check(errOpen)
+	Check(errOpen)
 	defer f.Close()
 
-	a, b, total := scanStamps(f)
+	a, b, total := ScanStamps(f)
 
 	rateA := fragRate(a, *flag_res)
 	rateB := fragRate(b, *flag_res)
-	time := makeTime(total, *flag_res)
+	time := MakeTime(total, *flag_res)
 
-	printTable(time, rateA, rateB)
+	PrintTable(time, rateA, rateB)
 }
 
 func fragRate(s []float64, res float64) []float64 {
