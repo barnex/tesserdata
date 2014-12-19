@@ -25,30 +25,49 @@ func main(){
 	check(errOpen)
 	defer f.Close()
 
-	a, b, _ := scanStamps(f)
-	log.Println("you got", len(a), "frags, other player got", len(b))
+	a, b, total := scanStamps(f)
 
-	time, rateA := fragRate(a, *flag_res)
+	rateA := fragRate(a, *flag_res)
+	rateB := fragRate(b, *flag_res)
+	time := makeTime(total, *flag_res)
 
-	for i, t := range time{
-		fmt.Println(t, rateA[i])
+	printTable(time, rateA, rateB)
+}
+
+func printTable(columns...[]float64){
+	t := columns[0]
+	for i:=range t{
+		for c:=range columns{
+			v := 0.0
+			if len(columns[c]) > i{
+				v = columns[c][i]
+			}
+			fmt.Print(v, "\t")
+		}
+		fmt.Println()
 	}
 }
 
-func fragRate(s []float64, res float64) (time, rate []float64){
+func makeTime(s []float64, res float64)[]float64{
 	tmax := s[len(s)-1]
 	imax := int(tmax / res)
-	rate = make([]float64, imax+1)
-	time = make([]float64, imax+1)
+	time := make([]float64, imax+1)
+	for i := range time{
+		time[i] = float64(i)*res
+	}
+	return time
+}
+
+func fragRate(s []float64, res float64) []float64{
+	tmax := s[len(s)-1]
+	imax := int(tmax / res)
+	rate := make([]float64, imax+1)
 	weight := 1/res
 	for _, t := range s{
 		i := int(t/res)
 		rate[i] += weight
 	}
-	for i := range time{
-		time[i] = float64(i)*res
-	}
-	return time, rate
+	return  rate
 }
 
 // Reads timestamp file and return frag timestaps for you, other player and  total
